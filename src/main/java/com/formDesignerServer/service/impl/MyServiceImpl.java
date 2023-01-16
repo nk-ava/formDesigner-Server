@@ -1,6 +1,8 @@
 package com.formDesignerServer.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.formDesignerServer.mapper.*;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.soap.Text;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,6 +32,16 @@ public class MyServiceImpl implements MyService {
     private FormMapper formMapper;
     @Autowired
     private MyMapper myMapper;
+    @Autowired
+    private DividerMapper dividerMapper;
+    @Autowired
+    private InputMapper inputMapper;
+    @Autowired
+    private SelectorMapper selectorMapper;
+    @Autowired
+    private SliderMapper sliderMapper;
+    @Autowired
+    private TextareaMapper textareaMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -37,7 +50,7 @@ public class MyServiceImpl implements MyService {
         List<String> components = new ArrayList<>();
         for(int i=0;i< list.size();i++){
             Map<String,Object> comp = list.get(i);
-            String type = (String) comp.get("type");
+            String type = (String) comp.get("compIcon");
             if(components.indexOf(type)==-1) components.add(type);
             comp.put("template_id", id);
             comp.put("index",i);
@@ -50,8 +63,8 @@ public class MyServiceImpl implements MyService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveForm(String temp_id, String subTime, List<Map<String, Object>> list) throws Exception {
-        if (temp_id==null) temp_id = saveTemplate(subTime,"temp_"+subTime, list, null);
+    public void saveForm(String temp_id, String subTime, List<Map<String, Object>> list,String name) throws Exception {
+        if (temp_id==null) temp_id = saveTemplate(subTime,name==null?"temp_"+subTime:name, list, null);
         else {
             if(templateMapper.selectList(new QueryWrapper<Template>().eq("id",temp_id)).size()==0)
                 throw new Exception("没有找到[id]："+temp_id+"的模板,无法插入表单。如果这是新模板不需要传tempId");
@@ -59,9 +72,9 @@ public class MyServiceImpl implements MyService {
         String form_id = (new Date()).getTime()+"";
         formMapper.insert(new Form(form_id,temp_id,toFormatDate(Long.parseLong(subTime))));
         for(Map<String,Object> mp : list){
-            String value = (String) mp.get("value");
-            if(value==null) throw new Exception("控件["+mp.get("id")+"]：value值为空，example/saveForm每个控件都得有值");
-            dataMapper.insert(new Data(form_id,(String) mp.get("id"),value,(String) mp.get("type")));
+            if(mp.get("value")==null) continue;
+            String value = mp.get("value").toString();
+            dataMapper.insert(new Data(form_id,(String) mp.get("id"),value,(String) mp.get("compIcon")));
         }
     }
 
@@ -85,7 +98,10 @@ public class MyServiceImpl implements MyService {
                 for(String comp : comps) compList.addAll(queryComps(comp,template.getId()));
                 Collections.sort(compList, new CompareList());
                 compList.forEach(item->{
-                    item.put("value",myMapper.getCompValue((String) str.get("id"),(String) item.get("id"),(String) item.get("type")));
+                    String v = myMapper.getCompValue((String) str.get("id"),(String) item.get("id"),(String) item.get("compIcon"));
+                    if(v.equals("false")) item.put("value",false);
+                    else if(v.equals("true")) item.put("value",true);
+                    else item.put("value",v);
                     item.remove("template_id");
                     item.remove("position");
                 });
@@ -131,7 +147,8 @@ public class MyServiceImpl implements MyService {
         f.setSubmitTime(toFormatDate(Long.parseLong(time)));
         formMapper.updateById(f);
         for(Map<String,Object> comp : list){
-            myMapper.updateValue(form_id,(String) comp.get("type"),(String) comp.get("id"),(String) comp.get("value"));
+            if(comp.get("value")==null) continue;
+            myMapper.updateValue(form_id,(String) comp.get("compIcon"),(String) comp.get("id"),comp.get("value").toString());
         }
     }
 
@@ -162,6 +179,26 @@ public class MyServiceImpl implements MyService {
                 Switch s = JSON.parseObject(JSON.toJSONString(mp),Switch.class);
                 switchMapper.insert(s);
                 break;
+            case "divider":
+                Divider divider = JSON.parseObject(JSON.toJSONString(mp),Divider.class);
+                dividerMapper.insert(divider);
+                break;
+            case "input":
+                Input input = JSON.parseObject(JSON.toJSONString(mp),Input.class);
+                inputMapper.insert(input);
+                break;
+            case "select":
+                Selector selector = JSON.parseObject(JSON.toJSONString(mp),Selector.class);
+                selectorMapper.insert(selector);
+                break;
+            case "slider":
+                Slider slider = JSON.parseObject(JSON.toJSONString(mp),Slider.class);
+                sliderMapper.insert(slider);
+                break;
+            case "textarea":
+                Textarea textarea = JSON.parseObject(JSON.toJSONString(mp),Textarea.class);
+                textareaMapper.insert(textarea);
+                break;
             default:
                 break;
         }
@@ -173,6 +210,22 @@ public class MyServiceImpl implements MyService {
                 break;
             case "switch":
                 switchMapper.delete(new QueryWrapper<Switch>().eq("template_id",temp_id));
+                break;
+            case "divider":
+                dividerMapper.delete(new QueryWrapper<Divider>().eq("template_id",temp_id));
+                break;
+            case "input":
+                inputMapper.delete(new QueryWrapper<Input>().eq("template_id",temp_id));
+                break;
+            case "select":
+                selectorMapper.delete(new QueryWrapper<Selector>().eq("template_id",temp_id));
+                break;
+            case "slider":
+                sliderMapper.delete(new QueryWrapper<Slider>().eq("template_id",temp_id));
+                break;
+            case "textarea":
+                textareaMapper.delete(new QueryWrapper<Textarea>().eq("template_id",temp_id));
+                break;
             default:break;
         }
     }
@@ -187,11 +240,26 @@ public class MyServiceImpl implements MyService {
     private List<Map<String,Object>> queryComps(String type,String temp_id){
         switch (type){
             case "button":
-                List<Map<String,Object>> buttonList = myMapper.findButtonComps(temp_id);
-                return buttonList;
+                List<Button> button = buttonMapper.selectList(new QueryWrapper<Button>().eq("template_id",temp_id));
+                return (List<Map<String,Object>>) JSONArray.parseArray(JSONObject.toJSONString(button));
             case "switch":
-                List<Map<String,Object>> switchList = myMapper.findSwitchComps(temp_id);
-                return switchList;
+                List<Switch> aSwitch = switchMapper.selectList(new QueryWrapper<Switch>().eq("template_id",temp_id));
+                return (List<Map<String,Object>>)JSONArray.parseArray(JSONObject.toJSONString(aSwitch));
+            case "divider":
+                List<Divider> divider = dividerMapper.selectList(new QueryWrapper<Divider>().eq("template_id",temp_id));
+                return (List<Map<String,Object>>)JSONArray.parseArray(JSONObject.toJSONString(divider));
+            case "input":
+                List<Input> input = inputMapper.selectList(new QueryWrapper<Input>().eq("template_id",temp_id));
+                return (List<Map<String,Object>>)JSONArray.parseArray(JSONObject.toJSONString(input));
+            case "select":
+                List<Selector> selector = selectorMapper.selectList(new QueryWrapper<Selector>().eq("template_id",temp_id));
+                return (List<Map<String,Object>>)JSONArray.parseArray(JSONObject.toJSONString(selector));
+            case "slider":
+                List<Slider> slider = sliderMapper.selectList(new QueryWrapper<Slider>().eq("template_id",temp_id));
+                return (List<Map<String,Object>>)JSONArray.parseArray(JSONObject.toJSONString(slider));
+            case "textarea":
+                List<Textarea> textarea = textareaMapper.selectList(new QueryWrapper<Textarea>().eq("template_id",temp_id));
+                return (List<Map<String,Object>>)JSONArray.parseArray(JSONObject.toJSONString(textarea));
             default:
                 return null;
         }

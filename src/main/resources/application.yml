@@ -1,3 +1,5 @@
+server:
+  port: 8848
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -5,9 +7,9 @@ spring:
     password: root
     url: jdbc:mysql://localhost:3306/formDesigner?serverTimezone=GMT%2b8
     dbname: formDesigner
-  sql:
-    init:
-      schema-locations: classpath:sql/init.sql
-      mode: always
+#  sql:
+#    init:
+#      schema-locations: classpath:sql/init.sql
+#      mode: always
 mybatis-plus:
   mapper-locations: classpath:com/formdesignerserver/mapper/xml/*.xml

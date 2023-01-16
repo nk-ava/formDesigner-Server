@@ -8,7 +8,8 @@
         select * from button where template_id = #{temp_id}
     </select>
     <select id="findSwitchComps" resultType="java.util.Map">
-        select * from switch where template_id = #{temp_id}
+        select id,template_id,position,compType,ele,title,disabled,compIcon,width,active_text as 'active-text',inactive_text as 'inactive-text',
+               active_color as 'active-color',inactive_color as 'inactive-color',showLabel,required from switch where template_id = #{temp_id}
     </select>
     <select id="getCompValue" resultType="String">
         select value from comp_value where form_id = #{form_id} and component_id = #{component_id} and compType = #{type}
@@ -19,4 +20,13 @@
     <update id="updateValue">
         update comp_value set value = #{value} where component_id = #{comp_id} and form_id = #{form_id} and compType = #{type}
     </update>
+    <select id="findDividerComps" resultType="java.util.Map">
+        select id,template_id,position,compType,ele,content_position as 'content-position',child,showLabel,compIcon from divider where template_id = #{temp_id}
+    </select>
+    <select id="findSliderComps" resultType="java.util.Map">
+        select id,template_id,position,compType,ele,title,compIcon,showLabel,min,max,disabled,step,show_stop as 'show-stop',required from slider where template_id = #{temp_id}
+    </select>
+    <select id="findTextareaComps" resultType="java.util.Map">
+        select id,template_id,position,compType,ele,compIcon,type,showLabel,title,row_s as 'rows',disabled,required from textarea where template_id = #{temp_id}
+    </select>
 </mapper>

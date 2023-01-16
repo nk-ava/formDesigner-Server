@@ -25,7 +25,7 @@ public class SimpleController {
         if (mp.get("list") != null) list = (List<Map<String, Object>>) mp.get("list");
         else return R.error().message("缺少参数list");
         try {
-            myService.saveForm(temp_id, time, list);
+            myService.saveForm(temp_id, time, list,(String)mp.get("name"));
             return R.ok();
         } catch (Exception e) {
             e.printStackTrace();

@@ -6,7 +6,7 @@ import java.util.Map;
 public interface MyService {
     String saveTemplate(String id, String name, List<Map<String, Object>> list, String temp_id) throws Exception;
 
-    void saveForm(String temp_id, String form_id, List<Map<String, Object>> list) throws Exception;
+    void saveForm(String temp_id, String form_id, List<Map<String, Object>> list,String name) throws Exception;
 
     List<Map<String, Object>> getAllFormInfo();
 

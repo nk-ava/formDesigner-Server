@@ -1,5 +1,6 @@
 package com.formDesignerServer.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,41 +13,36 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("button")
-public class Button implements Serializable {
-    //组件ID
-    @TableId(value = "id")
+@TableName("slider")
+public class Slider implements Serializable {
+    @TableId("id")
     private String id;
-    //所属模板ID
     @TableField("template_id")
     private String template_id;
-    //所属位置
     @TableField("position")
     private int position;
-    //组件类型
     @TableField("compType")
     private String compType;
-    //以下都为属性
+
+    @TableField("ele")
+    private String ele;
+    @TableField("title")
+    private String title;
     @TableField("compIcon")
     private String compIcon;
     @TableField("showLabel")
-    private String showLabel;
-    @TableField("ele")
-    private String ele;
-    @TableField("child")
-    private String child;
-    @TableField("size")
-    private String size;
-    @TableField("type")
-    private String type;
-    @TableField("plain")
-    private boolean plain;
-    @TableField("round")
-    private boolean round;
-    @TableField("circle")
-    private boolean circle;
+    private boolean showLabel;
+    @TableField("min")
+    private int min;
+    @TableField("max")
+    private int max;
     @TableField("disabled")
     private boolean disabled;
-    @TableField("icon")
-    private String icon;
+    @TableField("step")
+    private int step;
+    @TableField("show_stop")
+    @JSONField(name = "show-stop")
+    private boolean showStop;
+    @TableField("required")
+    private boolean required;
 }
