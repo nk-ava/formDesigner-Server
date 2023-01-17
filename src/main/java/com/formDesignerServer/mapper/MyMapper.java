@@ -2,6 +2,7 @@ package com.formDesignerServer.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,5 @@ public interface MyMapper {
     List<Map<String,Object>> findDividerComps(@Param("temp_id")String tempId);
     List<Map<String,Object>> findSliderComps(@Param("temp_id")String tempId);
     List<Map<String,Object>> findTextareaComps(@Param("temp_id")String tempId);
+    List<Map<String,Object>> getFormById(@Param("form_id")String id);
 }

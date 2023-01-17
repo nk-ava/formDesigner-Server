@@ -121,4 +121,14 @@ public class SimpleController {
             return R.error().message(e.toString());
         }
     }
+
+    @GetMapping("/getAllForm")
+    public List<Map<String,Object>> api8(){
+        return myService.getAllForm();
+    }
+
+    @GetMapping("/getFormById")
+    public List<Map<String,Object>> api9(@RequestParam("id")String id){
+        return myService.getFormById(id);
+    }
 }

@@ -30,7 +30,7 @@ public class Button implements Serializable {
     @TableField("compIcon")
     private String compIcon;
     @TableField("showLabel")
-    private String showLabel;
+    private boolean showLabel;
     @TableField("ele")
     private String ele;
     @TableField("child")

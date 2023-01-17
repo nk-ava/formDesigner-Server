@@ -20,5 +20,9 @@ public interface MyService {
 
     void deleteForm(String form_id) throws Exception;
 
+    List<Map<String,Object>> getAllForm();
+
+    List<Map<String,Object>> getFormById(String id);
+
     void test();
 }

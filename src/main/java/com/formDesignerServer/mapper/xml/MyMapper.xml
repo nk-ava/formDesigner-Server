@@ -15,7 +15,7 @@
         select value from comp_value where form_id = #{form_id} and component_id = #{component_id} and compType = #{type}
     </select>
     <select id="getAllTemp" resultType="java.util.Map">
-        select * from template
+        select id,name,update_time from template
     </select>
     <update id="updateValue">
         update comp_value set value = #{value} where component_id = #{comp_id} and form_id = #{form_id} and compType = #{type}
@@ -28,5 +28,8 @@
     </select>
     <select id="findTextareaComps" resultType="java.util.Map">
         select id,template_id,position,compType,ele,compIcon,type,showLabel,title,row_s as 'rows',disabled,required from textarea where template_id = #{temp_id}
+    </select>
+    <select id="getFormById" resultType="java.util.Map">
+        select * from form where id = #{form_id}
     </select>
 </mapper>

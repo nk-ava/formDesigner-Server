@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jws.Oneway;
 import javax.xml.soap.Text;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Service
 public class MyServiceImpl implements MyService {
@@ -42,6 +44,7 @@ public class MyServiceImpl implements MyService {
     private SliderMapper sliderMapper;
     @Autowired
     private TextareaMapper textareaMapper;
+    private Pattern pattern = Pattern.compile("^[-+]?[\\d]+$");
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -94,17 +97,7 @@ public class MyServiceImpl implements MyService {
                 nmp.put("id",str.get("id"));
                 nmp.put("subTime",str.get("submit_time"));
                 String[] comps = template.getComponents().split(",");
-                List<Map<String, Object>> compList = new ArrayList<>();
-                for(String comp : comps) compList.addAll(queryComps(comp,template.getId()));
-                Collections.sort(compList, new CompareList());
-                compList.forEach(item->{
-                    String v = myMapper.getCompValue((String) str.get("id"),(String) item.get("id"),(String) item.get("compIcon"));
-                    if(v.equals("false")) item.put("value",false);
-                    else if(v.equals("true")) item.put("value",true);
-                    else item.put("value",v);
-                    item.remove("template_id");
-                    item.remove("position");
-                });
+                List<Map<String, Object>> compList = getFormComps((String) str.get("id"),template.getId(),comps);
                 nmp.put("compList",compList);
                 formList.add(nmp);
             }
@@ -157,6 +150,24 @@ public class MyServiceImpl implements MyService {
     public void deleteForm(String form_id) throws Exception {
         formMapper.delete(new QueryWrapper<Form>().eq("id",form_id));
         dataMapper.delete(new QueryWrapper<Data>().eq("form_id",form_id));
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllForm() {
+        List<Map<String,Object>> mp = myMapper.getAllTemp();
+        for(Map<String,Object> m : mp){
+            List<Map<String, Object>> list = myMapper.findFormByTemp((String) m.get("id"));
+            m.put("formList",list);
+        }
+        return mp;
+    }
+
+    @Override
+    public List<Map<String, Object>> getFormById(String id) {
+        Form form = formMapper.selectOne(new QueryWrapper<Form>().eq("id",id));
+        Template template = templateMapper.selectOne(new QueryWrapper<Template>().eq("id",form.getTemplateId()));
+        String[] comps = template.getComponents().split(",");
+        return getFormComps(id,template.getId(),comps);
     }
 
     @Override
@@ -263,5 +274,20 @@ public class MyServiceImpl implements MyService {
             default:
                 return null;
         }
+    }
+    private List<Map<String,Object>> getFormComps(String form_id,String temp_id,String[] comps){
+        List<Map<String, Object>> compList = new ArrayList<>();
+        for(String comp : comps) compList.addAll(queryComps(comp,temp_id));
+        Collections.sort(compList, new CompareList());
+        compList.forEach(item->{
+            String v = myMapper.getCompValue(form_id,(String) item.get("id"),(String) item.get("compIcon"));
+            if(v.equals("false")) item.put("value",false);
+            else if(v.equals("true")) item.put("value",true);
+            else if(pattern.matcher(v).matches()) item.put("value",Integer.parseInt(v));
+            else item.put("value",v);
+            item.remove("template_id");
+            item.remove("position");
+        });
+        return compList;
     }
 }
