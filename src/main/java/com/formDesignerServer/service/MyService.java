@@ -24,5 +24,11 @@ public interface MyService {
 
     List<Map<String,Object>> getFormById(String id);
 
+    List<Map<String,Object>> getTempById(String id);
+
+    void updateTempName(String temp_id,String name) throws Exception;
+
+    List<Map<String,Object>> getTempByName(String name);
+
     void test();
 }

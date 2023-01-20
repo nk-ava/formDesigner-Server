@@ -22,7 +22,7 @@ public class Switch implements Serializable {
     private String id;
     //所属模板ID
     @TableField("template_id")
-    private String template_id;
+    private String templateId;
     //所属位置
     @TableField("position")
     private int position;

@@ -17,7 +17,7 @@ public class Input implements Serializable {
     @TableId(value = "id")
     private String id;
     @TableField("template_id")
-    private String template_id;
+    private String templateId;
     @TableField("position")
     private int position;
     @TableField("compType")

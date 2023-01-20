@@ -1,5 +1,6 @@
 package com.formDesignerServer.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,8 +13,8 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("textarea")
-public class Textarea implements Serializable {
+@TableName("input_number")
+public class InputNumber implements Serializable {
     @TableId("id")
     private String id;
     @TableField("template_id")
@@ -22,21 +23,32 @@ public class Textarea implements Serializable {
     private int position;
     @TableField("compType")
     private String compType;
-
-    @TableField("ele")
-    private String ele;
     @TableField("compIcon")
     private String compIcon;
-    @TableField("type")
-    private String type;
-    @TableField("showLabel")
-    private boolean showLabel;
+    @TableField("ele")
+    private String ele;
     @TableField("title")
     private String title;
-    @TableField("row_s")
-    private int rows;
+    @TableField("showLabel")
+    private boolean showLabel;
+    @TableField("min")
+    private int min;
+    @TableField("max")
+    private int max;
+    @TableField("step")
+    private int step;
+    @TableField("size")
+    private String size;
     @TableField("disabled")
     private boolean disabled;
+    @TableField("accuracy")
+    @JSONField(name = "precision")
+    private int accuracy;
+    @TableField("controls")
+    private boolean controls;
+    @TableField("controls_position")
+    @JSONField(name = "controls-position")
+    private String controlsPos;
     @TableField("required")
     private boolean required;
 }

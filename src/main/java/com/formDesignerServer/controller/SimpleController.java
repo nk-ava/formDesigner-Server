@@ -1,5 +1,6 @@
 package com.formDesignerServer.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.formDesignerServer.service.MyService;
 import com.formDesignerServer.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,5 +131,32 @@ public class SimpleController {
     @GetMapping("/getFormById")
     public List<Map<String,Object>> api9(@RequestParam("id")String id){
         return myService.getFormById(id);
+    }
+
+    @GetMapping("/getTempById")
+    public List<Map<String,Object>> api10(@RequestParam("id")String id){
+        return myService.getTempById(id);
+    }
+
+    @GetMapping("/updateTempName")
+    public R api11(@RequestParam("id")String tempId,@RequestParam("name")String name){
+        try {
+            myService.updateTempName(tempId,name);
+            return R.ok();
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.error().message(e.toString());
+        }
+    }
+
+    @GetMapping("/getTempByName")
+    public List<Map<String,Object>> api12(@RequestParam("name")String name){
+        return myService.getTempByName(name);
+    }
+
+    @PostMapping("/test")
+    public boolean api13(@RequestBody Map<String,Object> mp){
+       String str = JSON.toJSONString(mp.get("value"));
+       return (mp.get("value") instanceof String);
     }
 }

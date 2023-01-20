@@ -12,10 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @SpringBootTest
@@ -29,14 +26,12 @@ class FormDesignerServerApplicationTests {
     @Autowired
     private FormMapper formMapper;
 
+    private Pattern pattern = Pattern.compile("^\\[(.)*\\]$");
     @Test
     void contextLoads() {
-        Map<String,Object> mp = myMapper.getFormById("1673873067752").get(0);
-        System.out.println(mp.get("template_id"));
-        System.out.println(mp.get("id"));
-        System.out.println(mp.get("submit_time"));
-        System.out.println(selectorMapper.selectList(null).get(0).toString());
-        System.out.println(formMapper.selectList(null).get(0).toString());
+        String num = "6";
+        JSON.parseObject(num);
+        System.out.println(JSON.parseObject(num));
     }
 
 }

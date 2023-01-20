@@ -12,8 +12,8 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("textarea")
-public class Textarea implements Serializable {
+@TableName("date")
+public class DatePicker implements Serializable {
     @TableId("id")
     private String id;
     @TableField("template_id")
@@ -22,21 +22,26 @@ public class Textarea implements Serializable {
     private int position;
     @TableField("compType")
     private String compType;
-
     @TableField("ele")
     private String ele;
     @TableField("compIcon")
     private String compIcon;
-    @TableField("type")
-    private String type;
-    @TableField("showLabel")
-    private boolean showLabel;
     @TableField("title")
     private String title;
-    @TableField("row_s")
-    private int rows;
-    @TableField("disabled")
-    private boolean disabled;
+    @TableField("showLabel")
+    private boolean showLabel;
     @TableField("required")
     private boolean required;
+    @TableField("readonly")
+    private boolean readonly;
+    @TableField("disabled")
+    private boolean disabled;
+    @TableField("editable")
+    private boolean editable;
+    @TableField("clearable")
+    private boolean clearable;
+    @TableField("size")
+    private String size;
+    @TableField("type")
+    private String type;
 }

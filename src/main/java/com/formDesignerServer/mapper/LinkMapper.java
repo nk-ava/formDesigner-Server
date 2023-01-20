@@ -1,10 +1,9 @@
 package com.formDesignerServer.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.formDesignerServer.entity.CompValue;
+import com.formDesignerServer.entity.Link;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface DataMapper extends BaseMapper<CompValue> {
-
+public interface LinkMapper extends BaseMapper<Link> {
 }

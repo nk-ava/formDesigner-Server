@@ -1,5 +1,6 @@
 package com.formDesignerServer.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,8 +13,8 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("textarea")
-public class Textarea implements Serializable {
+@TableName("rate")
+public class Rate implements Serializable {
     @TableId("id")
     private String id;
     @TableField("template_id")
@@ -22,21 +23,24 @@ public class Textarea implements Serializable {
     private int position;
     @TableField("compType")
     private String compType;
-
-    @TableField("ele")
-    private String ele;
     @TableField("compIcon")
     private String compIcon;
-    @TableField("type")
-    private String type;
-    @TableField("showLabel")
-    private boolean showLabel;
+    @TableField("ele")
+    private String ele;
     @TableField("title")
     private String title;
-    @TableField("row_s")
-    private int rows;
-    @TableField("disabled")
-    private boolean disabled;
+    @TableField("showLabel")
+    private boolean showLabel;
     @TableField("required")
     private boolean required;
+    @TableField("max")
+    private int max;
+    @TableField("disabled")
+    private boolean disabled;
+    @TableField("allow_half")
+    @JSONField(name = "allow-half")
+    private boolean allowHalf;
+    @TableField("show_score")
+    @JSONField(name = "show-score")
+    private boolean showScore;
 }

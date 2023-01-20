@@ -216,3 +216,131 @@ CREATE TABLE IF NOT EXISTS `textarea`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for date
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `date`
+(
+    `id`          varchar(255) NOT NULL,
+    `template_id` varchar(255) NOT NULL,
+    `position`    int(11)      NOT NULL,
+    `compType`    varchar(255) NOT NULL DEFAULT 'date',
+    `ele`         varchar(255) NOT NULL,
+    `compIcon`    varchar(255) NOT NULL,
+    `title`       varchar(255) NOT NULL,
+    `showLabel`   int(11)      NOT NULL,
+    `required`    int(11)      NOT NULL,
+    `readonly`    int(11)      NOT NULL,
+    `disabled`    int(11)      NOT NULL,
+    `editable`    int(11)      NOT NULL,
+    `clearable`   int(11)      NOT NULL,
+    `size`        varchar(255) NOT NULL,
+    `type`        varchar(255) NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for inputNumber
+--
+
+CREATE TABLE IF NOT EXISTS `input_number`
+(
+    `id`                varchar(255) NOT NULL,
+    `template_id`       varchar(255) NOT NULL,
+    `position`          int(11)      NOT NULL,
+    `compType`          varchar(255) NOT NULL DEFAULT 'inputNumber',
+    `compIcon`          varchar(255) NOT NULL,
+    `ele`               varchar(255) NOT NULL,
+    `title`             varchar(255) NOT NULL,
+    `showLabel`         int(11)      NOT NULL,
+    `min`               int(11)      NOT NULL,
+    `max`               int(11)      NOT NULL,
+    `step`              int(11)      NOT NULL,
+    `size`              varchar(255) NOT NULL,
+    `disabled`          int(11)      NOT NULL,
+    `accuracy`          int(11)      NOT NULL,
+    `controls`          int(11)      NOT NULL,
+    `controls_position` varchar(255) NOT NULL,
+    `required`          int(11)      NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for link
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `link`
+(
+    `id`          varchar(255)                                                  NOT NULL,
+    `template_id` varchar(255)                                                  NOT NULL,
+    `position`    int(11)                                                       NOT NULL,
+    `compType`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'link',
+    `compIcon`    varchar(255)                                                  NOT NULL,
+    `ele`         varchar(255)                                                  NOT NULL,
+    `showLabel`   int(11)                                                       NOT NULL,
+    `child`       varchar(255)                                                  NOT NULL,
+    `type`        varchar(255)                                                  NOT NULL,
+    `underline`   int(11)                                                       NOT NULL,
+    `disabled`    int(11)                                                       NOT NULL,
+    `href`        varchar(255)                                                  NOT NULL,
+    `icon`        varchar(255)                                                  NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for rate
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `rate`
+(
+    `id`          varchar(255) NOT NULL,
+    `template_id` varchar(255) NOT NULL,
+    `position`    int(11)      NOT NULL,
+    `compType`    varchar(255) NOT NULL DEFAULT 'rate',
+    `compIcon`    varchar(255) NOT NULL,
+    `ele`         varchar(255) NOT NULL,
+    `title`       varchar(255) NOT NULL,
+    `showLabel`   int(11)      NOT NULL,
+    `required`    int(11)      NOT NULL,
+    `max`         int(11)      NOT NULL,
+    `disabled`    int(11)      NOT NULL,
+    `allow_half`  int(11)      NOT NULL,
+    `show_score`  int(11)      NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for time
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `time`
+(
+    `id`                varchar(255)                                                  NOT NULL,
+    `template_id`       varchar(255)                                                  NOT NULL,
+    `compType`          varchar(255)                                                  NOT NULL DEFAULT 'time',
+    `position`          int(11)                                                       NOT NULL,
+    `compIcon`          varchar(255)                                                  NOT NULL,
+    `ele`               varchar(255)                                                  NOT NULL,
+    `title`             varchar(255)                                                  NOT NULL,
+    `showLabel`         int(11)                                                       NOT NULL,
+    `required`          int(11)                                                       NOT NULL,
+    `readonly`          int(11)                                                       NOT NULL,
+    `disabled`          int(11)                                                       NOT NULL,
+    `editable`          int(11)                                                       NOT NULL,
+    `is_range`          int(11)                                                       NOT NULL,
+    `clearable`         int(11)                                                       NOT NULL,
+    `range_separator`   varchar(255)                                                  NOT NULL,
+    `start_placeholder` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `end_placeholder`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `placeholder`       varchar(255)                                                  NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+

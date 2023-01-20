@@ -32,4 +32,7 @@
     <select id="getFormById" resultType="java.util.Map">
         select * from form where id = #{form_id}
     </select>
+    <select id="fuzzyGetTempByName" resultType="java.util.Map">
+        select * from template where name like concat('%',#{name},'%')
+    </select>
 </mapper>
