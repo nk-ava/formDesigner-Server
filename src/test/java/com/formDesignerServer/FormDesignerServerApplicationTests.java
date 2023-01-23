@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SpringBootTest
@@ -29,9 +30,6 @@ class FormDesignerServerApplicationTests {
     private Pattern pattern = Pattern.compile("^\\[(.)*\\]$");
     @Test
     void contextLoads() {
-        String num = "6";
-        JSON.parseObject(num);
-        System.out.println(JSON.parseObject(num));
     }
 
 }
