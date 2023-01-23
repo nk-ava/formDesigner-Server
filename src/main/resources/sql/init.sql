@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `comp_value`
 (
     `form_id`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     `component_id` varchar(255)                                                  NOT NULL,
-    `value`        varchar(255)                                                  NOT NULL,
+    `value`        longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci     NOT NULL,
     `compType`     varchar(255)                                                  NOT NULL,
     PRIMARY KEY (`form_id`, `component_id`, `compType`)
 ) ENGINE = InnoDB
@@ -344,3 +344,142 @@ CREATE TABLE IF NOT EXISTS `time`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
+-- ----------------------------
+-- Table structure for checkbox
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `checkbox`
+(
+    `id`          varchar(255) NOT NULL,
+    `template_id` varchar(255) NOT NULL,
+    `position`    int(11)      NOT NULL,
+    `compType`    varchar(255) NOT NULL DEFAULT 'checkbox',
+    `compIcon`    varchar(255) NOT NULL,
+    `ele`         varchar(255) NOT NULL,
+    `title`       varchar(255) NOT NULL,
+    `showLabel`   int(11)      NOT NULL,
+    `required`    int(11)      NOT NULL,
+    `disabled`    int(11)      NOT NULL,
+    `size`        varchar(255) NOT NULL,
+    `min`         int(11)      NOT NULL,
+    `max`         int(11)      NOT NULL,
+    `text_color`  varchar(255) NOT NULL,
+    `fill`        varchar(255) NOT NULL,
+    `childIndex`  int(11)      NOT NULL,
+    `child`       varchar(255) NOT NULL,
+    `childAttr`   varchar(255) NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for radio
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `radio`
+(
+    `id`          varchar(255) NOT NULL,
+    `template_id` varchar(255) NOT NULL,
+    `position`    int(11)      NOT NULL,
+    `compType`    varchar(255) NOT NULL DEFAULT 'radio',
+    `compIcon`    varchar(255) NOT NULL,
+    `ele`         varchar(255) NOT NULL,
+    `title`       varchar(255) NOT NULL,
+    `showLabel`   int(11)      NOT NULL,
+    `required`    int(11)      NOT NULL,
+    `disabled`    int(11)      NOT NULL,
+    `size`        varchar(255) NOT NULL,
+    `text_color`  varchar(255) NOT NULL,
+    `fill`        varchar(255) NOT NULL,
+    `child`       varchar(255) NOT NULL,
+    `childIndex`  int(11)      NOT NULL,
+    `childAttr`   varchar(255) NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for editor
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `editor`
+(
+    `id`               varchar(255) NOT NULL,
+    `template_id`      varchar(255) NOT NULL,
+    `position`         int(11)      NOT NULL,
+    `compType`         varchar(255) NOT NULL DEFAULT 'editor',
+    `ele`              varchar(255) NOT NULL,
+    `title`            varchar(255) NOT NULL,
+    `showLabel`        int(11)      NOT NULL,
+    `required`         int(11)      NOT NULL,
+    `check`            int(11)      NOT NULL,
+    `compIcon`         varchar(255) NOT NULL,
+    `defaultMaxLength` int(11)      NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for collapse
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `collapse`
+(
+    `id`          varchar(255) NOT NULL,
+    `template_id` varchar(255) NOT NULL,
+    `position`    int(11)      NOT NULL,
+    `compType`    varchar(255) NOT NULL DEFAULT 'collapse',
+    `compIcon`    varchar(255) NOT NULL,
+    `ele`         varchar(255) NOT NULL,
+    `showLabel`   int(11)      NOT NULL,
+    `accordion`   int(11)      NOT NULL,
+    `child`       longtext     NOT NULL,
+    `childIndex`  int(11)      NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for color_picker
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `color_picker`
+(
+    `id`          varchar(255) NOT NULL,
+    `template_id` varchar(255) NOT NULL,
+    `position`    int(11)      NOT NULL,
+    `compType`    varchar(255) NOT NULL DEFAULT 'colorpicker',
+    `compIcon`    varchar(255) NOT NULL,
+    `ele`         varchar(255) NOT NULL,
+    `title`       varchar(255) NOT NULL,
+    `showLabel`   int(11)      NOT NULL,
+    `required`    int(11)      NOT NULL,
+    `disabled`    int(11)      NOT NULL,
+    `size`        varchar(255) NOT NULL,
+    `show_alpha`  int(11)      NOT NULL,
+    `predefine`   varchar(255) NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for qrcode
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `qrcode`
+(
+    `id`          varchar(255) NOT NULL,
+    `template_id` varchar(255) NOT NULL,
+    `position`    int(11)      NOT NULL,
+    `compType`    varchar(255) NOT NULL DEFAULT 'qrcode',
+    `compIcon`    varchar(255) NOT NULL,
+    `ele`         varchar(255) NOT NULL,
+    `title`       varchar(255) NOT NULL,
+    `showLabel`   int(11)      NOT NULL,
+    `text`        varchar(255) NOT NULL,
+    `size`        int(11)      NOT NULL,
+    `colorDark`   varchar(255) NOT NULL,
+    `colorLight`  varchar(255) NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;

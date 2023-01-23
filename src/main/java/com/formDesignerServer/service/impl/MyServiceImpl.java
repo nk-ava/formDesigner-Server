@@ -51,7 +51,19 @@ public class MyServiceImpl implements MyService {
     private LinkMapper linkMapper;
     @Autowired
     private InputNumberMapper inputNumberMapper;
-    private List<String> valueNum = Arrays.asList("slider","rate","inputNumber");
+    @Autowired
+    private CheckBoxMapper checkBoxMapper;
+    @Autowired
+    private RadioMapper radioMapper;
+    @Autowired
+    private EditorMapper editorMapper;
+    @Autowired
+    private ColorPickerMapper colorPickerMapper;
+    @Autowired
+    private CollapseMapper collapseMapper;
+    @Autowired
+    private QrCodeMapper qrCodeMapper;
+    private List<String> valueNum = Arrays.asList("slider", "rate", "inputNumber");
     private Pattern pattern = Pattern.compile("^\\[(.)*\\]$");
 
     @Override
@@ -85,7 +97,7 @@ public class MyServiceImpl implements MyService {
         for (Map<String, Object> mp : list) {
             if (mp.get("value") == null) continue;
             String value;
-            if(mp.get("value") instanceof String) value = (String) mp.get("value");
+            if (mp.get("value") instanceof String) value = (String) mp.get("value");
             else value = JSON.toJSONString(mp.get("value"));
             dataMapper.insert(new CompValue(form_id, (String) mp.get("id"), value, (String) mp.get("compIcon")));
         }
@@ -153,7 +165,7 @@ public class MyServiceImpl implements MyService {
         for (Map<String, Object> comp : list) {
             if (comp.get("value") == null) continue;
             String value;
-            if(comp.get("value") instanceof String) value = (String) comp.get("value");
+            if (comp.get("value") instanceof String) value = (String) comp.get("value");
             else value = JSON.toJSONString(comp.get("value"));
             if (myMapper.updateValue(form_id, (String) comp.get("compIcon"), (String) comp.get("id"), value) == 0) {
                 dataMapper.insert(new CompValue(form_id, (String) comp.get("id"), value, (String) comp.get("compIcon")));
@@ -193,8 +205,8 @@ public class MyServiceImpl implements MyService {
         List<Map<String, Object>> list = new ArrayList<>();
         for (String comp : comps) list.addAll(queryComps(comp, id));
         Collections.sort(list, new CompareList());
-        list.forEach(item->{
-            item.remove("template_id");
+        list.forEach(item -> {
+            item.remove("templateId");
             item.remove("position");
         });
         return list;
@@ -265,24 +277,48 @@ public class MyServiceImpl implements MyService {
                 textareaMapper.insert(textarea);
                 break;
             case "date":
-                DatePicker datePicker = JSON.parseObject(JSON.toJSONString(mp),DatePicker.class);
+                DatePicker datePicker = JSON.parseObject(JSON.toJSONString(mp), DatePicker.class);
                 datePickerMapper.insert(datePicker);
                 break;
             case "inputNumber":
-                InputNumber inputNumber = JSON.parseObject(JSON.toJSONString(mp),InputNumber.class);
+                InputNumber inputNumber = JSON.parseObject(JSON.toJSONString(mp), InputNumber.class);
                 inputNumberMapper.insert(inputNumber);
                 break;
             case "link":
-                Link link = JSON.parseObject(JSON.toJSONString(mp),Link.class);
+                Link link = JSON.parseObject(JSON.toJSONString(mp), Link.class);
                 linkMapper.insert(link);
                 break;
             case "rate":
-                Rate rate = JSON.parseObject(JSON.toJSONString(mp),Rate.class);
+                Rate rate = JSON.parseObject(JSON.toJSONString(mp), Rate.class);
                 rateMapper.insert(rate);
                 break;
             case "time":
-                TimePicker timePicker = JSON.parseObject(JSON.toJSONString(mp),TimePicker.class);
+                TimePicker timePicker = JSON.parseObject(JSON.toJSONString(mp), TimePicker.class);
                 timePickerMapper.insert(timePicker);
+                break;
+            case "radio":
+                Radio radio = JSON.parseObject(JSON.toJSONString(mp), Radio.class);
+                radioMapper.insert(radio);
+                break;
+            case "checkbox":
+                CheckBox checkBox = JSON.parseObject(JSON.toJSONString(mp), CheckBox.class);
+                checkBoxMapper.insert(checkBox);
+                break;
+            case "editor":
+                Editor editor = JSON.parseObject(JSON.toJSONString(mp), Editor.class);
+                editorMapper.insert(editor);
+                break;
+            case "colorpicker":
+                ColorPicker colorPicker = JSON.parseObject(JSON.toJSONString(mp), ColorPicker.class);
+                colorPickerMapper.insert(colorPicker);
+                break;
+            case "collapse":
+                Collapse collapse = JSON.parseObject(JSON.toJSONString(mp), Collapse.class);
+                collapseMapper.insert(collapse);
+                break;
+            case "qrcode":
+                QrCode qrCode = JSON.parseObject(JSON.toJSONString(mp), QrCode.class);
+                qrCodeMapper.insert(qrCode);
                 break;
             default:
                 break;
@@ -313,19 +349,37 @@ public class MyServiceImpl implements MyService {
                 textareaMapper.delete(new QueryWrapper<Textarea>().eq("template_id", temp_id));
                 break;
             case "date":
-                datePickerMapper.delete(new QueryWrapper<DatePicker>().eq("template_id",temp_id));
+                datePickerMapper.delete(new QueryWrapper<DatePicker>().eq("template_id", temp_id));
                 break;
             case "inputNumber":
-                inputNumberMapper.delete(new QueryWrapper<InputNumber>().eq("template_id",temp_id));
+                inputNumberMapper.delete(new QueryWrapper<InputNumber>().eq("template_id", temp_id));
                 break;
             case "link":
-                linkMapper.delete(new QueryWrapper<Link>().eq("template_id",temp_id));
+                linkMapper.delete(new QueryWrapper<Link>().eq("template_id", temp_id));
                 break;
             case "rate":
-                rateMapper.delete(new QueryWrapper<Rate>().eq("template_id",temp_id));
+                rateMapper.delete(new QueryWrapper<Rate>().eq("template_id", temp_id));
                 break;
             case "time":
-                timePickerMapper.delete(new QueryWrapper<TimePicker>().eq("template_id",temp_id));
+                timePickerMapper.delete(new QueryWrapper<TimePicker>().eq("template_id", temp_id));
+                break;
+            case "radio":
+                radioMapper.delete(new QueryWrapper<Radio>().eq("template_id", temp_id));
+                break;
+            case "checkbox":
+                checkBoxMapper.delete(new QueryWrapper<CheckBox>().eq("template_id", temp_id));
+                break;
+            case "editor":
+                editorMapper.delete(new QueryWrapper<Editor>().eq("template_id", temp_id));
+                break;
+            case "colorpicker":
+                colorPickerMapper.delete(new QueryWrapper<ColorPicker>().eq("template_id", temp_id));
+                break;
+            case "collapse":
+                collapseMapper.delete(new QueryWrapper<Collapse>().eq("template_id", temp_id));
+                break;
+            case "qrcode":
+                qrCodeMapper.delete(new QueryWrapper<QrCode>().eq("template_id", temp_id));
                 break;
             default:
                 break;
@@ -379,6 +433,24 @@ public class MyServiceImpl implements MyService {
             case "time":
                 List<TimePicker> timePickers = timePickerMapper.selectList(new QueryWrapper<TimePicker>().eq("template_id", temp_id));
                 return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(timePickers));
+            case "radio":
+                List<Radio> radios = radioMapper.selectList(new QueryWrapper<Radio>().eq("template_id", temp_id));
+                return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(radios));
+            case "checkbox":
+                List<CheckBox> checkBoxes = checkBoxMapper.selectList(new QueryWrapper<CheckBox>().eq("template_id", temp_id));
+                return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(checkBoxes));
+            case "editor":
+                List<Editor> editors = editorMapper.selectList(new QueryWrapper<Editor>().eq("template_id", temp_id));
+                return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(editors));
+            case "colorpicker":
+                List<ColorPicker> colorPickers = colorPickerMapper.selectList(new QueryWrapper<ColorPicker>().eq("template_id", temp_id));
+                return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(colorPickers));
+            case "collapse":
+                List<Collapse> collapses = collapseMapper.selectList(new QueryWrapper<Collapse>().eq("template_id", temp_id));
+                return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(collapses));
+            case "qrcode":
+                List<QrCode> qrCodes = qrCodeMapper.selectList(new QueryWrapper<QrCode>().eq("template_id", temp_id));
+                return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(qrCodes));
             default:
                 return null;
         }
@@ -397,7 +469,7 @@ public class MyServiceImpl implements MyService {
                 else if (v.equals("true")) item.put("value", true);
                 else item.put("value", v);
             }
-            item.remove("template_id");
+            item.remove("templateId");
             item.remove("position");
         });
         return compList;
