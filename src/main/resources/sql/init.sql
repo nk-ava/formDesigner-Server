@@ -79,6 +79,8 @@ CREATE TABLE IF NOT EXISTS `form`
     `id`          varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     `template_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     `submit_time` datetime                                                      NOT NULL,
+    `detail`      varchar(255)                                                  NOT NULL,
+    `name`        varchar(255)                                                  NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -411,7 +413,7 @@ CREATE TABLE IF NOT EXISTS `editor`
     `title`            varchar(255) NOT NULL,
     `showLabel`        int(11)      NOT NULL,
     `required`         int(11)      NOT NULL,
-    `check`            int(11)      NOT NULL,
+    `inspect`          int(11)      NOT NULL,
     `compIcon`         varchar(255) NOT NULL,
     `defaultMaxLength` int(11)      NOT NULL,
     PRIMARY KEY (`id`, `template_id`)
