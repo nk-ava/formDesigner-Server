@@ -63,6 +63,10 @@ public class MyServiceImpl implements MyService {
     private CollapseMapper collapseMapper;
     @Autowired
     private QrCodeMapper qrCodeMapper;
+    @Autowired
+    private TextMapper textMapper;
+    @Autowired
+    private BarCodeMapper barCodeMapper;
     private List<String> valueNum = Arrays.asList("slider", "rate", "inputNumber");
     private Pattern pattern = Pattern.compile("^\\[(.)*\\]$");
 
@@ -320,6 +324,14 @@ public class MyServiceImpl implements MyService {
                 QrCode qrCode = JSON.parseObject(JSON.toJSONString(mp), QrCode.class);
                 qrCodeMapper.insert(qrCode);
                 break;
+            case "text":
+                formDesigner.entity.Text text = JSON.parseObject(JSON.toJSONString(mp), formDesigner.entity.Text.class);
+                textMapper.insert(text);
+                break;
+            case "barcode":
+                formDesigner.entity.BarCode barCode = JSON.parseObject(JSON.toJSONString(mp), formDesigner.entity.BarCode.class);
+                barCodeMapper.insert(barCode);
+                break;
             default:
                 break;
         }
@@ -380,6 +392,12 @@ public class MyServiceImpl implements MyService {
                 break;
             case "qrcode":
                 qrCodeMapper.delete(new QueryWrapper<QrCode>().eq("template_id", temp_id));
+                break;
+            case "text":
+                textMapper.delete(new QueryWrapper<formDesigner.entity.Text>().eq("template_id", temp_id));
+                break;
+            case "barcode":
+                barCodeMapper.delete(new QueryWrapper<formDesigner.entity.BarCode>().eq("template_id", temp_id));
                 break;
             default:
                 break;
@@ -451,6 +469,12 @@ public class MyServiceImpl implements MyService {
             case "qrcode":
                 List<QrCode> qrCodes = qrCodeMapper.selectList(new QueryWrapper<QrCode>().eq("template_id", temp_id));
                 return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(qrCodes));
+            case "text":
+                List<formDesigner.entity.Text> texts = textMapper.selectList(new QueryWrapper<formDesigner.entity.Text>().eq("template_id", temp_id));
+                return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(texts));
+            case "barcode":
+                List<formDesigner.entity.BarCode> barCodes = barCodeMapper.selectList(new QueryWrapper<formDesigner.entity.BarCode>().eq("template_id", temp_id));
+                return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(barCodes));
             default:
                 return null;
         }

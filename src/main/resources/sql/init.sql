@@ -485,3 +485,50 @@ CREATE TABLE IF NOT EXISTS `qrcode`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for barcode
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `barcode`
+(
+    `id`           varchar(255) NOT NULL,
+    `template_id`  varchar(255) NOT NULL,
+    `position`     int(11)      NOT NULL,
+    `compType`     varchar(255) NOT NULL DEFAULT 'barcode',
+    `compIcon`     varchar(255) NOT NULL,
+    `ele`          varchar(255) NOT NULL,
+    `showLabel`    int(11)      NOT NULL,
+    `title`        varchar(255) NOT NULL,
+    `lineColor`    varchar(255) NOT NULL,
+    `background`   varchar(255) NOT NULL,
+    `barWidth`     int(11)      NOT NULL,
+    `barHeight`    int(11)      NOT NULL,
+    `displayValue` int(11)      NOT NULL,
+    `fontSize`     int(11)      NOT NULL,
+    `text`         varchar(255) NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for text
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `text`
+(
+    `id`          varchar(255) NOT NULL,
+    `template_id` varchar(255) NOT NULL,
+    `position`    int(11)      NOT NULL,
+    `compType`    varchar(255) NOT NULL DEFAULT 'text',
+    `compIcon`    varchar(255) NOT NULL,
+    `showLabel`   int(11)      NOT NULL,
+    `ele`         varchar(255) NOT NULL,
+    `align`       varchar(255) NOT NULL,
+    `color`       varchar(255) NOT NULL,
+    `size`        int(11)      NOT NULL,
+    `bold`        int(11)      NOT NULL,
+    `text`        longtext     NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
