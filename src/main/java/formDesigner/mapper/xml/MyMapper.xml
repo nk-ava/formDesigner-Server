@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="formDesigner.mapper.MyMapper">
+    <select id="findFormByTemp" resultType="java.util.Map">
+        select id,submit_time from form where template_id = #{temp_id}
+    </select>
+    <select id="findButtonComps" resultType="java.util.Map">
+        select * from button where template_id = #{temp_id}
+    </select>
+    <select id="findSwitchComps" resultType="java.util.Map">
+        select id,template_id,position,compType,ele,title,disabled,compIcon,width,active_text as 'active-text',inactive_text as 'inactive-text',
+               active_color as 'active-color',inactive_color as 'inactive-color',showLabel,required from switch where template_id = #{temp_id}
+    </select>
+    <select id="getCompValue" resultType="String">
+        select value from comp_value where form_id = #{form_id} and component_id = #{component_id} and compType = #{type}
+    </select>
+    <select id="getAllTemp" resultType="java.util.Map">
+        select id,name,update_time from template
+    </select>
+    <update id="updateValue">
+        update comp_value set value = #{value} where component_id = #{comp_id} and form_id = #{form_id} and compType = #{type}
+    </update>
+    <select id="findDividerComps" resultType="java.util.Map">
+        select id,template_id,position,compType,ele,content_position as 'content-position',child,showLabel,compIcon from divider where template_id = #{temp_id}
+    </select>
+    <select id="findSliderComps" resultType="java.util.Map">
+        select id,template_id,position,compType,ele,title,compIcon,showLabel,min,max,disabled,step,show_stop as 'show-stop',required from slider where template_id = #{temp_id}
+    </select>
+    <select id="findTextareaComps" resultType="java.util.Map">
+        select id,template_id,position,compType,ele,compIcon,type,showLabel,title,row_s as 'rows',disabled,required from textarea where template_id = #{temp_id}
+    </select>
+    <select id="getFormById" resultType="java.util.Map">
+        select * from form where id = #{form_id}
+    </select>
+    <select id="fuzzyGetTempByName" resultType="java.util.Map">
+        select * from template where name like concat('%',#{name},'%')
+    </select>
+</mapper>

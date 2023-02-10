@@ -1,14 +1,18 @@
 server:
-  port: 8848
+  port: 8081
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/form?serverTimezone=GMT%2b8&allowMultiQueries=true
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/formDesigner?serverTimezone=GMT%2b8
+
   sql:
     init:
       schema-locations: classpath:sql/init.sql
       mode: always
+
 mybatis-plus:
-  mapper-locations: classpath:com/formdesignerserver/mapper/xml/*.xml
+  mapper-locations: classpath*:formDesigner/mapper/xml/*.xml
+

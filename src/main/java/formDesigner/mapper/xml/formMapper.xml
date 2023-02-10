@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="formDesigner.mapper.FormsMapper">
+<delete id="deleteForm">
+
+    delete FROM  item_input where form_id=#{id};
+    delete FROM  form_info where id=#{id};
+    delete FROM  item_switch where form_id=#{id};
+    delete FROM  item_data where form_id=#{id};
+</delete>
+
+</mapper>
