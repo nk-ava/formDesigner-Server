@@ -258,7 +258,7 @@ public class MyServiceImpl implements MyService {
     }
 
     private String toFormatDate(long time) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(time);
         return simpleDateFormat.format(date);
     }
