@@ -15,14 +15,14 @@ import java.io.Serializable;
 public class CompValue implements Serializable {
     //表单ID
     @TableField("form_id")
-    String formId;
+    private String formId;
     //主键ID
     @TableField("component_id")
-    String componentId;
+    private String componentId;
     //值
     @TableField("value")
-    String value;
+    private String value;
     //组件类型
     @TableField("compType")
-    String compType;
+    private String compType;
 }

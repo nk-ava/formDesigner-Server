@@ -24,6 +24,8 @@ public class Link implements Serializable {
     private String compType;
     @TableField("compIcon")
     private String compIcon;
+    @TableField("compAlign")
+    private String compAlign;
     @TableField("ele")
     private String ele;
     @TableField("showLabel")

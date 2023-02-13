@@ -27,6 +27,8 @@ public class Switch implements Serializable {
     //组件类型
     @TableField("compType")
     private String compType;
+    @TableField("compAlign")
+    private String compAlign;
     //以下都是控件属性
     @TableField("ele")
     private String ele;

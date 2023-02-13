@@ -29,6 +29,8 @@ public class Button implements Serializable {
     //以下都为属性
     @TableField("compIcon")
     private String compIcon;
+    @TableField("compAlign")
+    private String compAlign;
     @TableField("showLabel")
     private boolean showLabel;
     @TableField("ele")

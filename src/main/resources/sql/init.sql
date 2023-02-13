@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `button`
     `child`       varchar(255)                                                  NOT NULL,
     `size`        varchar(255)                                                  NOT NULL,
     `type`        varchar(255)                                                  NOT NULL,
+    `compAlign`   varchar(255)                                                  NOT NULL,
     `plain`       int(11)                                                       NOT NULL,
     `round`       int(11)                                                       NOT NULL,
     `circle`      int(11)                                                       NOT NULL,
@@ -171,6 +172,7 @@ CREATE TABLE IF NOT EXISTS `switch`
     `title`          varchar(255)                                                  NOT NULL,
     `disabled`       int(11)                                                       NOT NULL,
     `compIcon`       varchar(255)                                                  NOT NULL,
+    `compAlign`      varchar(255)                                                  NOT NULL,
     `width`          varchar(255)                                                  NOT NULL,
     `active_text`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
     `inactive_text`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -282,6 +284,7 @@ CREATE TABLE IF NOT EXISTS `link`
     `position`    int(11)                                                       NOT NULL,
     `compType`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'link',
     `compIcon`    varchar(255)                                                  NOT NULL,
+    `compAlign`   varchar(255)                                                  NOT NULL,
     `ele`         varchar(255)                                                  NOT NULL,
     `showLabel`   int(11)                                                       NOT NULL,
     `child`       varchar(255)                                                  NOT NULL,
@@ -474,6 +477,7 @@ CREATE TABLE IF NOT EXISTS `qrcode`
     `position`    int(11)      NOT NULL,
     `compType`    varchar(255) NOT NULL DEFAULT 'qrcode',
     `compIcon`    varchar(255) NOT NULL,
+    `compAlign`   varchar(255) NOT NULL,
     `ele`         varchar(255) NOT NULL,
     `title`       varchar(255) NOT NULL,
     `showLabel`   int(11)      NOT NULL,
@@ -496,6 +500,7 @@ CREATE TABLE IF NOT EXISTS `barcode`
     `position`     int(11)      NOT NULL,
     `compType`     varchar(255) NOT NULL DEFAULT 'barcode',
     `compIcon`     varchar(255) NOT NULL,
+    `compAlign`    varchar(255) NOT NULL,
     `ele`          varchar(255) NOT NULL,
     `showLabel`    int(11)      NOT NULL,
     `title`        varchar(255) NOT NULL,
@@ -528,6 +533,28 @@ CREATE TABLE IF NOT EXISTS `text`
     `size`        int(11)      NOT NULL,
     `bold`        int(11)      NOT NULL,
     `text`        longtext     NOT NULL,
+    PRIMARY KEY (`id`, `template_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Table structure for upload
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `upload`
+(
+    `id`           varchar(255) NOT NULL,
+    `template_id`  varchar(255) NOT NULL,
+    `position`     int(11)      NOT NULL,
+    `compType`     varchar(255) NOT NULL DEFAULT 'upload',
+    `compIcon`     varchar(255) NOT NULL,
+    `ele`          varchar(255) NOT NULL,
+    `disabled`     int(11)      NOT NULL,
+    `restrictions` int(11)      NOT NULL,
+    `showTips`     int(11)      NOT NULL,
+    `tips`         varchar(255) NOT NULL,
+    `listStyle`    varchar(255) NOT NULL,
+    `acceptType`   varchar(255) NOT NULL,
     PRIMARY KEY (`id`, `template_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4

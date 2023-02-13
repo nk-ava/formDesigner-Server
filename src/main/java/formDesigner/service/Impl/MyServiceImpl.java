@@ -66,6 +66,8 @@ public class MyServiceImpl implements MyService {
     private TextMapper textMapper;
     @Autowired
     private BarCodeMapper barCodeMapper;
+    @Autowired
+    private UploadMapper uploadMapper;
     private List<String> valueNum = Arrays.asList("slider", "rate", "inputNumber");
     private Pattern pattern = Pattern.compile("^\\[(.)*\\]$");
 
@@ -89,7 +91,7 @@ public class MyServiceImpl implements MyService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveForm(String temp_id,String formName, String subTime, List<Map<String, Object>> list, String detail, String name) throws Exception {
+    public void saveForm(String temp_id, String formName, String subTime, List<Map<String, Object>> list, String detail, String name) throws Exception {
         if (temp_id == null) temp_id = saveTemplate(subTime, name == null ? "temp_" + subTime : name, list, null);
         else {
             if (templateMapper.selectList(new QueryWrapper<Template>().eq("id", temp_id)).size() == 0)
@@ -345,6 +347,10 @@ public class MyServiceImpl implements MyService {
                 BarCode barCode = JSON.parseObject(JSON.toJSONString(mp), BarCode.class);
                 barCodeMapper.insert(barCode);
                 break;
+            case "att":
+                Upload upload = JSON.parseObject(JSON.toJSONString(mp), Upload.class);
+                uploadMapper.insert(upload);
+                break;
             default:
                 break;
         }
@@ -411,6 +417,9 @@ public class MyServiceImpl implements MyService {
                 break;
             case "barcode":
                 barCodeMapper.delete(new QueryWrapper<BarCode>().eq("template_id", temp_id));
+                break;
+            case "att":
+                uploadMapper.delete(new QueryWrapper<Upload>().eq("template_id", temp_id));
                 break;
             default:
                 break;
@@ -488,6 +497,9 @@ public class MyServiceImpl implements MyService {
             case "barcode":
                 List<BarCode> barCodes = barCodeMapper.selectList(new QueryWrapper<BarCode>().eq("template_id", temp_id));
                 return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(barCodes));
+            case "att":
+                List<Upload> uploads = uploadMapper.selectList(new QueryWrapper<Upload>().eq("template_id",temp_id));
+                return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(uploads));
             default:
                 return null;
         }
