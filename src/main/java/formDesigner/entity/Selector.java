@@ -48,4 +48,6 @@ public class Selector implements Serializable {
     private boolean required;
     @TableField(value = "child",typeHandler = ListToString.class)
     private List<Map<String,Object>> child;
+    @TableField("childIndex")
+    private int childIndex;
 }

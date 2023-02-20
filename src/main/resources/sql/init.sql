@@ -130,6 +130,7 @@ CREATE TABLE IF NOT EXISTS `selector`
     `placeholder` varchar(255)                                                  NOT NULL,
     `required`    int(11)                                                       NOT NULL,
     `child`       varchar(255)                                                  NOT NULL,
+    `childIndex`  int(11)                                                       NOT NULL,
     PRIMARY KEY (`id`, `template_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
