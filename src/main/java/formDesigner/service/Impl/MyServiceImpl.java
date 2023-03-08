@@ -11,7 +11,9 @@ import formDesigner.service.MyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -259,6 +261,31 @@ public class MyServiceImpl implements MyService {
         formMapper.updateById(form);
     }
 
+    @Override
+    public String uploadImg(MultipartFile multipartFile) throws Exception {
+        byte[] bs = multipartFile.getBytes();
+        String name = "api_img_" + (new Date()).getTime();
+        File file = new File("c:/uploadImg/");
+        if (!file.exists()) file.mkdir();
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("c:/uploadImg/" + name))) {
+            bos.write(bs);
+            return "http://localhost:8081/FORM/image/"+name;
+        }
+    }
+
+    @Override
+    public byte[] getImage(String name) {
+        File file = new File("c:/uploadImg");
+        if (!file.exists()) file.mkdir();
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream("c:/uploadImg/" + name))) {
+            byte[] bytes = new byte[bis.available()];
+            bis.read(bytes);
+            return bytes;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private String toFormatDate(long time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(time);
@@ -498,7 +525,7 @@ public class MyServiceImpl implements MyService {
                 List<BarCode> barCodes = barCodeMapper.selectList(new QueryWrapper<BarCode>().eq("template_id", temp_id));
                 return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(barCodes));
             case "att":
-                List<Upload> uploads = uploadMapper.selectList(new QueryWrapper<Upload>().eq("template_id",temp_id));
+                List<Upload> uploads = uploadMapper.selectList(new QueryWrapper<Upload>().eq("template_id", temp_id));
                 return (List<Map<String, Object>>) JSONArray.parseArray(JSONObject.toJSONString(uploads));
             default:
                 return null;

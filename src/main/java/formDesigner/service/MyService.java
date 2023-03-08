@@ -1,5 +1,7 @@
 package formDesigner.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.Map;
 
@@ -35,4 +37,8 @@ public interface MyService {
     void reFormName(String formId,String name) throws Exception;
 
     void reFormDetail(String formId,String detail) throws Exception;
+
+    String uploadImg(MultipartFile multipartFile) throws Exception;
+
+    byte[] getImage(String name);
 }

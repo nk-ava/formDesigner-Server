@@ -1,5 +1,6 @@
 package formDesigner.controller;
 
+import cn.hutool.http.body.MultipartBody;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.alibaba.fastjson.JSON;
@@ -11,6 +12,7 @@ import formDesigner.utils.RS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -165,17 +167,17 @@ public class SimpleController {
 
     @GetMapping("/getTempByName")
     public R api12(@RequestParam("name") String name, @RequestParam("current") long current, @RequestParam("limit") long limit) {
-        Page<Template> page = new Page<>(current,limit);
+        Page<Template> page = new Page<>(current, limit);
         QueryWrapper<Template> wrapper = new QueryWrapper<>();
         //判断条件值是否为空，如果不为空拼接条件
-        if(!StringUtils.isEmpty(name)) {
+        if (!StringUtils.isEmpty(name)) {
             //构建条件
-            wrapper.like("name",name);
+            wrapper.like("name", name);
         }
-        templateService.page(page,wrapper);
+        templateService.page(page, wrapper);
         long total = page.getTotal();//总记录数
         List<Template> records = page.getRecords(); //数据list集合
-        return R.ok().data("total",total).data("rows",records);
+        return R.ok().data("total", total).data("rows", records);
     }
 
     @PostMapping("/test")
@@ -185,7 +187,7 @@ public class SimpleController {
     }
 
     @GetMapping("/reFormName")
-    public RS api14(@RequestParam("id") String id, @RequestParam("name") String name){
+    public RS api14(@RequestParam("id") String id, @RequestParam("name") String name) {
         try {
             myService.reFormName(id, name);
             return RS.ok();
@@ -196,13 +198,29 @@ public class SimpleController {
     }
 
     @GetMapping("/reFormDetail")
-    public RS api15(@RequestParam("id") String id, @RequestParam("detail") String detail){
-        try{
-            myService.reFormDetail(id,detail);
+    public RS api15(@RequestParam("id") String id, @RequestParam("detail") String detail) {
+        try {
+            myService.reFormDetail(id, detail);
             return RS.ok();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return RS.error().message(e.toString());
         }
+    }
+
+    @PostMapping("/upload")
+    public RS api16(@RequestBody MultipartFile file) {
+        try {
+            String name = myService.uploadImg(file);
+            return RS.ok().message(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RS.error().message(e.toString());
+        }
+    }
+
+    @GetMapping(value = "/image/{name}",produces = "image/jpeg")
+    public byte[] api17(@PathVariable String name) {
+        return myService.getImage(name);
     }
 }
