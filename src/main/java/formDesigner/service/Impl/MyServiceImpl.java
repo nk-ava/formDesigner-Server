@@ -269,7 +269,7 @@ public class MyServiceImpl implements MyService {
         if (!file.exists()) file.mkdir();
         try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("c:/uploadImg/" + name))) {
             bos.write(bs);
-            return "http://localhost:8081/FORM/image/"+name;
+            return "http://81.68.210.170:8081/FORM/image/"+name;
         }
     }
 
